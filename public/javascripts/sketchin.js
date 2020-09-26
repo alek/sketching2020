@@ -12,7 +12,10 @@ function sumLetters(str) {
 
 var getFrequency = function(message) {
 	if (isNumeric(message)) {
-		return 20+5*Math.abs(Math.floor(message))%127;
+		console.log("NUM!")
+		console.log(parseInt(message))
+		console.log(20+5*Math.abs(parseInt(message))%127)
+		return 20+5*Math.abs(parseInt(message))%127;
 	} else {
 		return sumLetters(messages)%655
 	}
@@ -44,11 +47,11 @@ $("#run-button").click(function() {
 			});
 
 			client.on('message', function(topic, message) {
-				console.log('new message:', topic, message.toString());
+				// console.log('new message:', topic, message.toString());
 			  if (Math.random() < 0.1) {
 			  	$("#messages").empty()
 			  }
-			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + (20+5*message) + "Hz" + '</div>')
+			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + getFrequency(message) + "Hz" + '</div>')
 			  try {
 			  	synth.triggerAttackRelease(getFrequency(message), "8n");
 			  } catch (err) { }
