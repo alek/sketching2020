@@ -15,16 +15,17 @@ $("#run-button").click(function() {
 			client.on('connect', function(){
 			  console.log('client has connected!');
 
-			  client.subscribe('/try/table_7');
+			  client.subscribe('/try/table_7/#');
 			  
 			  // client.unsubscribe('/example');
 			  // setInterval(function(){
-			  //   client.publish('/try/table_7', (Math.random() < 0.5 ) ? "BLEEP" : "BLOOP");
+			  //   client.publish('/try/table_7/alek', (Math.random() < 0.5 ) ? "BLEEP" : "BLOOP");
 			  // }, 2000);
 
 			});
 
 			client.on('message', function(topic, message) {
+				console.log('new message:', topic, message.toString());
 			  if (Math.random() < 0.1) {
 			  	$("#messages").empty()
 			  }
