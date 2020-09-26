@@ -11,11 +11,8 @@ function sumLetters(str) {
 };
 
 var getFrequency = function(message) {
-	if (isNumeric(message)) {
-		console.log("NUM!")
-		console.log(parseInt(message))
-		console.log(20+5*Math.abs(parseInt(message))%127)
-		return 20+5*Math.abs(parseInt(message))%127;
+	if (isNumeric(message.toString())) {
+		return Math.min(20 + 5*parseInt(message),655)
 	} else {
 		return sumLetters(messages)%655
 	}
