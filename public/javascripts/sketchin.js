@@ -20,9 +20,11 @@ $("#run-button").click(function() {
 			});
 
 			client.on('message', function(topic, message) {
-			  // console.log('new message:', topic, message.toString());
+			  if (Math.random() < 0.1) {
+			  	$("#messages").empty()
+			  }
 			  $("#messages").append('<div class="msg">' + message.toString() + '</div>')
-			  synth.triggerAttackRelease("C4", "8n");
+			  synth.triggerAttackRelease("C3", "8n");
 			});
 
 		});
