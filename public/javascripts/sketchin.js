@@ -30,7 +30,9 @@ $("#run-button").click(function() {
 			  	$("#messages").empty()
 			  }
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + (20+5*message) + "Hz" + '</div>')
-			  synth.triggerAttackRelease(20+5*message, "8n");
+			  try {
+			  	synth.triggerAttackRelease(20+5*message, "8n");
+			  } catch (err) { }
 			});
 
 		});
