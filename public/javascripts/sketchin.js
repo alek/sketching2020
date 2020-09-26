@@ -29,7 +29,7 @@ $("#run-button").click(function() {
 			  if (Math.random() < 0.1) {
 			  	$("#messages").empty()
 			  }
-			  $("#messages").append('<div class="msg">' + message.toString() + " = " + (20+5*message) + "Hz" + '</div>')
+			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + (20+5*message) + "Hz" + '</div>')
 			  synth.triggerAttackRelease(20+5*message, "8n");
 			});
 
