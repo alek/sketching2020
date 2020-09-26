@@ -3,6 +3,7 @@ function isNumeric(value) {
 }
 
 function sumLetters(str) {
+	str = str.toString()
     let sum = 0;
     for (let i = 0; i < str.length; i++) {
         sum += str.charCodeAt(i)
@@ -14,7 +15,7 @@ var getFrequency = function(message) {
 	if (isNumeric(message.toString())) {
 		return Math.min(20 + 5*parseInt(message),655)
 	} else {
-		return 20 + sumLetters(messages)%635
+		return 20 + sumLetters(message)%635
 	}
 }
 
