@@ -1,3 +1,22 @@
+function isNumeric(value) {
+        return /^-?\d+$/.test(value);
+}
+
+function sumLetters(str) {
+    let sum = 0;
+    for (let i = 0; i < str.length; i++) {
+        sum += str[i];
+    }
+    return sum;
+};
+
+var getFrequency = function(message) {
+	if (isNumeric(message)) {
+		return 20+5*Math.abs(Math.floor(message))%127;
+	} else {
+		return sumLetters(messages)%655
+	}
+}
 
 
 $("#run-button").click(function() {
@@ -31,7 +50,7 @@ $("#run-button").click(function() {
 			  }
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + (20+5*message) + "Hz" + '</div>')
 			  try {
-			  	synth.triggerAttackRelease(20+5*message, "8n");
+			  	synth.triggerAttackRelease(getFrequency(message), "8n");
 			  } catch (err) { }
 			});
 
