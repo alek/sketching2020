@@ -26,6 +26,14 @@ $("#run-button").click(function() {
 	requirejs(["Tone"], function(Tone) {
 		// const synth = new Tone.Synth().toDestination();
 		// const synth = new Tone.FMSynth().toDestination();
+
+
+		// const filter = new Tone.Filter(1500, "highpass").toDestination();
+		// filter.frequency.rampTo(20000, 10);
+
+		// const filter = new Tone.Chorus(4, 2.5, 0.5);
+		const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5).toDestination();
+
 		const synth = new Tone.MonoSynth({
 			oscillator: {
 				type: "sine"
@@ -33,7 +41,9 @@ $("#run-button").click(function() {
 			envelope: {
 				attack: 0.5
 			}
-		}).toDestination();
+		// }).connect(filter).toDestination();
+		}).connect(feedbackDelay);
+
 
 		requirejs(["mqtt"], function(mqtt) {
 			var client = mqtt.connect('mqtt://try:try@broker.shiftr.io', {
