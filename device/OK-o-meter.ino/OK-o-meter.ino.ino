@@ -29,6 +29,9 @@
 #include <Arduino_LSM6DS3.h>
 #include "arduino_secrets.h"
 
+#define debug_readings 0
+#define include_gyro 0
+
 
 // initialize WiFi connection:
 WiFiClient wifi;
@@ -43,6 +46,7 @@ char topicy[] = "try/table_7/chris/y";
 char topicz[] = "try/table_7/chris/z";
 char topicpot[] = "try/table_7/chris";
 char clientID[] = "buttonClient";
+bool state = false;
 
 // intensity of LED:
 int intensity = 0;
@@ -91,6 +95,10 @@ void setup() {
     Serial.println("Failed to initialize IMU!");
     while (1);
   }
+
+  pinMode(buttonPin, INPUT_PULLUP);
+  attachInterrupt(digitalPinToInterrupt(buttonPin), blink, LOW);
+  
 }
 
 void loop() {
@@ -123,67 +131,78 @@ void loop() {
     intensity = max(intensity--, 0);
   }
 
-  // read the pushbutton:
-  int buttonState = digitalRead(buttonPin);
-  // if it's changed:
-  if (buttonState != lastButtonState) {
-    // debounce delay:
-    delay(debounceDelay);
+  
+
+  if (state)
+  {  
+    
     // and it's pressed:
-    if (buttonState == LOW) {
+    if (HIGH) {
         float x, y, z;
         if (IMU.gyroscopeAvailable()) {
           IMU.readGyroscope(x, y, z);
-
-          Serial.print(x);
-          Serial.print('\t');
-          Serial.print(y);
-          Serial.print('\t');
-          Serial.println(z);
+          if (debug_readings == 1)
+          {
+            Serial.print(x);
+            Serial.print('\t');
+            Serial.print(y);
+            Serial.print('\t');
+            Serial.println(z);
+          }
         }
 
-      // start a new message on the topic:
-      mqttClient.beginMessage(topicx);
-      String x_str = String(x);
-      mqttClient.print(x_str);
-      // send the message:
-      mqttClient.endMessage();
-
-      mqttClient.beginMessage(topicy);
-      String y_str = String(y);
-      mqttClient.print(y_str);
-      // send the message:
-      mqttClient.endMessage();
-
-      mqttClient.beginMessage(topicz);
-      String z_str = String(z);
-      mqttClient.print(z_str);
-      // send the message:
-      mqttClient.endMessage();
+      if (include_gyro == 1)
+      {
+        // start a new message on the topic:
+        mqttClient.beginMessage(topicx);
+        String x_str = String(x);
+        mqttClient.print(x_str);
+        // send the message:
+        mqttClient.endMessage();
+  
+        mqttClient.beginMessage(topicy);
+        String y_str = String(y);
+        mqttClient.print(y_str);
+        // send the message:
+        mqttClient.endMessage();
+  
+        mqttClient.beginMessage(topicz);
+        String z_str = String(z);
+        mqttClient.print(z_str);
+        // send the message:
+        mqttClient.endMessage();
+      }
+      
       int reading=0;
       int avg8=0;
       int avg=0;
       for(int i = 0; i<8; i++)
       {
         reading = analogRead(A7);
-        Serial.print("Reading");
-        Serial.print(i);
-        Serial.print("= ");
-        Serial.println(reading);
+        if (debug_readings == 1)
+        {
+          Serial.print("Reading");
+          Serial.print(i);
+          Serial.print("= ");
+          Serial.println(reading);
+        }
         avg8 += reading>>3;
         //Serial.println(avg8);
       }
       avg = avg8 >> 3;
       mqttClient.beginMessage(topicpot);
       mqttClient.print(avg);
-      Serial.println(avg);
+      if (debug_readings == 1)
+        {
+          Serial.println(avg);
+        }
       // send the message:
       mqttClient.endMessage();
 
     }
-    // save current state for next comparison:
-    lastButtonState = buttonState;
-  }
+    delay(1000);
+ }
+ 
 }
 
 boolean connectToBroker() {
@@ -199,4 +218,11 @@ boolean connectToBroker() {
   mqttClient.subscribe(topicpot);
   // return that you're connected:
   return true;
+}
+
+void blink()
+{
+  state = !state;
+  Serial.print("State = ");
+  Serial.println(state);
 }
