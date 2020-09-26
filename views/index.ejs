@@ -6,17 +6,18 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
     <script src='/javascripts/jquery-3.1.1.min.js' /></script>
+    <script src='/javascripts/svg.js' /></script>
     <script data-main="javascripts/sketchin.js" src='/javascripts/require.js' /></script>
     <script data-main="javascripts/Tone.js" src='/javascripts/require.js' /></script>
   </head>
   <body>
     <div id="body-container">
-      <div>
-        <!-- <svg id="results" width="480" height="800" xmlns="http://www.w3.org/2000/svg"></svg> -->
+      <div id="event-bus">
       	<div id="run-button">Click me</div>
         <div id="incoming-label">Incoming messages:</div>
         <div id="messages"></div>
       </div>
+      <svg id="graph" width="800" height="500" xmlns="http://www.w3.org/2000/svg"></svg>
     </div>
   </body>
 </html>

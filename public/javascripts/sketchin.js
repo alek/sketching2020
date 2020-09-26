@@ -22,16 +22,11 @@ var getFrequency = function(message) {
 $("#run-button").click(function() {
 
 	$("#incoming-label").show()
+	drawRectangle([0,0], 800, 500, "#fff", "graph")		
 
 	requirejs(["Tone"], function(Tone) {
-		// const synth = new Tone.Synth().toDestination();
-		// const synth = new Tone.FMSynth().toDestination();
 
 
-		// const filter = new Tone.Filter(1500, "highpass").toDestination();
-		// filter.frequency.rampTo(20000, 10);
-
-		// const filter = new Tone.Chorus(4, 2.5, 0.5);
 		const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5).toDestination();
 
 		const synth = new Tone.MonoSynth({
@@ -41,7 +36,6 @@ $("#run-button").click(function() {
 			envelope: {
 				attack: 0.5
 			}
-		// }).connect(filter).toDestination();
 		}).connect(feedbackDelay);
 
 
@@ -54,22 +48,21 @@ $("#run-button").click(function() {
 			  console.log('client has connected!');
 
 			  client.subscribe('/try/table_7/#');
-			  
-			  // client.unsubscribe('/example');
-			  // setInterval(function(){
-			  //   client.publish('/try/table_7/alek', (Math.random() < 0.5 ) ? "BLEEP" : "BLOOP");
-			  // }, 2000);
-
 			});
 
 			client.on('message', function(topic, message) {
-				// console.log('new message:', topic, message.toString());
 			  if (Math.random() < 0.1) {
 			  	$("#messages").empty()
 			  }
+			  let freq = getFrequency(message)
+			  let color = "rgba(" + freq + ",0,0," + freq/600 + ")"
+			  if (Math.random() < 0.1) {
+			  	color = "#000"
+			  }
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + getFrequency(message) + "Hz" + '</div>')
+			  drawCircle([Math.random()*500,Math.random()*500], freq/7, color, "graph")		
 			  try {
-			  	synth.triggerAttackRelease(getFrequency(message), "4n");
+			  	synth.triggerAttackRelease(freq, "4n");
 			  } catch (err) { }
 			});
 
