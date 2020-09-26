@@ -69,3 +69,10 @@ body {
 #messages {
 	margin-top: 10px;
 }
+
+#incoming-label {
+	font-size: 10px;
+	line-height: 18px;
+	margin-top: 20px;
+	display: none;
+}

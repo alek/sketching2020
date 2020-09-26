@@ -1,4 +1,8 @@
+
+
 $("#run-button").click(function() {
+
+	$("#incoming-label").show()
 
 	requirejs(["Tone"], function(Tone) {
 		const synth = new Tone.Synth().toDestination();
@@ -11,20 +15,21 @@ $("#run-button").click(function() {
 			client.on('connect', function(){
 			  console.log('client has connected!');
 
-			  client.subscribe('/sketching');
+			  client.subscribe('/try/table_7');
+			  
 			  // client.unsubscribe('/example');
+			  // setInterval(function(){
+			  //   client.publish('/try/table_7', (Math.random() < 0.5 ) ? "BLEEP" : "BLOOP");
+			  // }, 2000);
 
-			  setInterval(function(){
-			    client.publish('/sketching', (Math.random() < 0.5 ) ? "BLEEP" : "BLOOP");
-			  }, 2000);
 			});
 
 			client.on('message', function(topic, message) {
 			  if (Math.random() < 0.1) {
 			  	$("#messages").empty()
 			  }
-			  $("#messages").append('<div class="msg">' + message.toString() + '</div>')
-			  synth.triggerAttackRelease("C3", "8n");
+			  $("#messages").append('<div class="msg">' + message.toString() + " = " + (20+5*message) + "Hz" + '</div>')
+			  synth.triggerAttackRelease(20+5*message, "8n");
 			});
 
 		});
