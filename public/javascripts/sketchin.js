@@ -24,7 +24,8 @@ $("#run-button").click(function() {
 	$("#incoming-label").show()
 
 	requirejs(["Tone"], function(Tone) {
-		const synth = new Tone.Synth().toDestination();
+		// const synth = new Tone.Synth().toDestination();
+		const synth = new Tone.FMSynth().toDestination();
 
 		requirejs(["mqtt"], function(mqtt) {
 			var client = mqtt.connect('mqtt://try:try@broker.shiftr.io', {
