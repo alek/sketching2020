@@ -28,10 +28,10 @@ $("#run-button").click(function() {
 		// const synth = new Tone.FMSynth().toDestination();
 		const synth = new Tone.MonoSynth({
 			oscillator: {
-				type: "square"
+				type: "sine"
 			},
 			envelope: {
-				attack: 0.1
+				attack: 0.5
 			}
 		}).toDestination();
 
@@ -59,7 +59,7 @@ $("#run-button").click(function() {
 			  }
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + getFrequency(message) + "Hz" + '</div>')
 			  try {
-			  	synth.triggerAttackRelease(getFrequency(message), "8n");
+			  	synth.triggerAttackRelease(getFrequency(message), "4n");
 			  } catch (err) { }
 			});
 
