@@ -15,6 +15,8 @@ var getFrequency = function(message) {
 	if (isNumeric(message.toString())) {
 		return Math.min(20 + 5*parseInt(message),655)
 	} else {
+		// 
+		drawText([250,100+75*Math.random()], message, 24 + Math.floor(48*Math.random()) + "px", "#fff", 500, 0, "Helvetica", "graph")
 		return 20 + sumLetters(message)%635
 	}
 }
@@ -27,7 +29,6 @@ $("#run-button").click(function() {
 	var palette = ["#dc2f02", "#e85d04", "#f48c06", "#f48c06", "#faa307", "#ffba08"]
 
 	requirejs(["Tone"], function(Tone) {
-
 
 		const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5).toDestination();
 
@@ -53,14 +54,11 @@ $("#run-button").click(function() {
 			});
 
 			client.on('message', function(topic, message) {
-			  if (Math.random() < 0.1) {
+			  if (Math.random() < 0.05) {
 			  	$("#messages").empty()
+			  	$("#graph").empty()
 			  }
 			  let freq = getFrequency(message)
-			  // let color = "rgba(" + freq + ",255,255," + freq/600 + ")"
-			  // if (Math.random() < 0.1) {
-			  // 	color = "#000"
-			  // }
 			  let color = palette[Math.floor(Math.random()*palette.length)]
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + getFrequency(message) + "Hz" + '</div>')
 			  drawCircle([Math.random()*500,Math.random()*500], freq/7, color, "graph")		
