@@ -15,7 +15,7 @@ var getFrequency = function(message) {
 	if (isNumeric(message.toString())) {
 		return Math.min(20 + 5*parseInt(message),655)
 	} else {
-		drawText([250,100+200*Math.random()], message.toString(), 24 + Math.floor(48*Math.random()) + "px", "#fff", 500, 0, "Helvetica", "graph")
+		drawText([250,100+300*Math.random()], message.toString(), 24 + Math.floor(48*Math.random()) + "px", "#fff", 500, 0, "Helvetica", "graph")
 		return 20 + sumLetters(message)%635
 	}
 }
