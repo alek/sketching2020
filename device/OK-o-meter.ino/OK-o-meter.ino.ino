@@ -45,15 +45,18 @@ char topicx[] = "try/table_7/chris/x";
 char topicy[] = "try/table_7/chris/y";
 char topicz[] = "try/table_7/chris/z";
 char topicpot[] = "try/table_7/chris";
-char clientID[] = "buttonClient";
-bool state = false;
+char clientID[] = "OKoMETER";
+int state = false;
 
 // intensity of LED:
 int intensity = 0;
 
 // details for pushbutton and LED:
 const int buttonPin = 2;
-const int ledPin = 3;
+const int ledPin4 = 4;
+const int ledPin3 = 5;
+const int ledPin2 = 6;
+const int ledPin1 = 7;
 const int potPin = A7;
 const int debounceDelay = 5;
 int lastButtonState = 0;
@@ -66,8 +69,12 @@ void setup() {
 
   // initialize I/O pins:
   pinMode(buttonPin, INPUT_PULLUP);
-  pinMode (ledPin, OUTPUT);
+  pinMode (ledPin1, OUTPUT);
+  pinMode (ledPin2, OUTPUT);
+  pinMode (ledPin3, OUTPUT);
+  pinMode (ledPin4, OUTPUT);
   pinMode(potPin, INPUT);
+  
 
   // initialize WiFi, if not connected:
   while (WiFi.status() != WL_CONNECTED) {
@@ -97,7 +104,7 @@ void setup() {
   }
 
   pinMode(buttonPin, INPUT_PULLUP);
-  attachInterrupt(digitalPinToInterrupt(buttonPin), blink, LOW);
+  attachInterrupt(digitalPinToInterrupt(buttonPin), interrupt_handler, LOW);
   
 }
 
@@ -123,17 +130,10 @@ void loop() {
       }
     }
   }
-  // if the LED is on:
-  if (intensity > 0) {
-    // update its level:
-    analogWrite(ledPin, intensity);
-    // fade level down one point for next time through loop:
-    intensity = max(intensity--, 0);
-  }
 
   
 
-  if (state)
+  if (state>0)
   {  
     
     // and it's pressed:
@@ -200,7 +200,8 @@ void loop() {
       mqttClient.endMessage();
 
     }
-    delay(1000);
+    delay(state*1000);
+    
  }
  
 }
@@ -220,9 +221,46 @@ boolean connectToBroker() {
   return true;
 }
 
-void blink()
+void interrupt_handler()
 {
-  state = !state;
-  Serial.print("State = ");
-  Serial.println(state);
+  static unsigned long last_interrupt_time = 0;
+  unsigned long interrupt_time = millis();
+ // If interrupts come faster than 200ms, assume it's a bounce and ignore
+ if (interrupt_time - last_interrupt_time > 200)
+ {
+  if (state == 0)
+  {
+    state = 4;
+  }
+  else
+  {
+    state--;
+  }
+  
+  Serial.print("Transmitting every = ");
+  Serial.print(state);
+  Serial.println(" seconds");
+ }
+ last_interrupt_time = interrupt_time;
+  digitalWrite(ledPin1, LOW);
+  digitalWrite(ledPin2, LOW);
+  digitalWrite(ledPin3, LOW);
+  digitalWrite(ledPin4, LOW);
+  if (state > 0)
+  {
+    digitalWrite(ledPin1, HIGH);
+  }
+  if (state > 1)
+  {
+    digitalWrite(ledPin2, HIGH);
+  }
+  if (state > 2)
+  {
+    digitalWrite(ledPin3, HIGH);
+  }
+  if (state > 3)
+  {
+    digitalWrite(ledPin4, HIGH);
+  }
+  
 }
