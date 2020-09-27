@@ -86,16 +86,6 @@ $("#run-button").click(function() {
 			new Tone.DuoSynth().toDestination(),
 			new Tone.FMSynth().toDestination(),
 			new Tone.MembraneSynth().toDestination(),
-			new Tone.MonoSynth({
-				oscillator: {
-					type: "square"
-				},
-				envelope: {
-					attack: 0.1,
-					decay: 0.6,
-					sustain: 0.2
-				}
-			}).connect(new Tone.BitCrusher(4).toDestination()),
 			new Tone.PolySynth().toDestination(),
 			new Tone.MembraneSynth().connect(new Tone.FeedbackDelay("4n", 0.1).toDestination()),
 			new Tone.MembraneSynth().connect(new Tone.BitCrusher(4).toDestination()).connect(new Tone.Phaser({
