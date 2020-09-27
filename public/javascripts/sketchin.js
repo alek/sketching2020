@@ -66,7 +66,7 @@ $("#run-button").click(function() {
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + freq + "Hz" + '</div>')
 			  drawCircle([Math.random()*500,Math.random()*500], freq/5, color, "graph")		
 			  try {
-			  	synth.triggerAttackRelease(freq, "4n");
+			  	synth.triggerAttackRelease(freq, "8n");
 			  } catch (err) { }
 			});
 
