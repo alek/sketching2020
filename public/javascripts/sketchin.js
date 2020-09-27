@@ -81,7 +81,14 @@ $("#run-button").click(function() {
 					sustain: 0.2
 				}
 			}).connect(feedbackDelay),
-			new Tone.Synth().toDestination()
+			new Tone.Synth().toDestination(),
+			new Tone.AMSynth().toDestination(),
+			new Tone.DuoSynth().toDestination(),
+			new Tone.FMSynth().toDestination(),
+			new Tone.MembraneSynth().toDestination(),
+			new Tone.NoiseSynth().toDestination(),
+			new Tone.PluckSynth().toDestination(),
+			new Tone.PolySynth().toDestination()			
 		]
 
 		requirejs(["mqtt"], function(mqtt) {
