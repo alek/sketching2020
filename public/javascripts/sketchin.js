@@ -24,6 +24,8 @@ $("#run-button").click(function() {
 	$("#incoming-label").show()
 	drawRectangle([0,0], 500, 500, "#000", "graph")		
 
+	var palette = ["#dc2f02", "#e85d04", "#f48c06", "#f48c06", "#faa307", "#ffba08"]
+
 	requirejs(["Tone"], function(Tone) {
 
 
@@ -55,10 +57,11 @@ $("#run-button").click(function() {
 			  	$("#messages").empty()
 			  }
 			  let freq = getFrequency(message)
-			  let color = "rgba(" + freq + ",255,255," + freq/600 + ")"
-			  if (Math.random() < 0.1) {
-			  	color = "#000"
-			  }
+			  // let color = "rgba(" + freq + ",255,255," + freq/600 + ")"
+			  // if (Math.random() < 0.1) {
+			  // 	color = "#000"
+			  // }
+			  let color = palette[Math.floor(Math.random()*palette.length)]
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + getFrequency(message) + "Hz" + '</div>')
 			  drawCircle([Math.random()*500,Math.random()*500], freq/7, color, "graph")		
 			  try {
