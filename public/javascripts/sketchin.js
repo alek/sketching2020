@@ -141,6 +141,8 @@ $("#run-button").click(function() {
 				  	synths[Math.floor(Math.random()*synths.length)].triggerAttackRelease(freq, "8n");
 				} else if (synthControl == "off") {
 					// no synths triggered
+				} else {
+					synths[synthID].triggerAttackRelease(freq, "16n");	
 				}
 
 			  } catch (err) { }
