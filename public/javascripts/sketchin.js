@@ -1,4 +1,5 @@
 var messageCount = 0
+const urlParams = new URLSearchParams(window.location.search);
 
 function isNumeric(value) {
         return /^-?\d+$/.test(value);
@@ -65,10 +66,16 @@ $("#run-button").click(function() {
 			});
 
 			client.on('connect', function(){
-			  console.log('client has connected!');
 
-			  // client.subscribe('/try/table_7/#');
-			  client.subscribe('/try/table_7/#');
+			  let topic = urlParams.get("topic") 
+			  if (!topic) {
+			  	topic = '/try/table_7/#' 
+			  } else {
+			  	topic += '#'
+			  }
+			  $("#incoming-label").html('<span class="strong">' + topic + "</span> incoming messages:")
+			  client.subscribe(topic);
+
 			});
 
 			client.on('message', function(topic, message) {

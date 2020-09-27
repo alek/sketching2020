@@ -64,6 +64,7 @@ body {
 	border: 1px solid #000;
 	box-shadow: 2px 2px 1px 0 rgba(0,0,0,1);
 	cursor: pointer;
+	margin-bottom: 20px;
 }
 
 #messages {
@@ -73,7 +74,6 @@ body {
 #incoming-label {
 	font-size: 10px;
 	line-height: 18px;
-	margin-top: 20px;
 	display: none;
 }
 
@@ -83,4 +83,8 @@ body {
 
 #graph {
 	margin-left: 100px;
+}
+
+.strong {
+	font-weight: 700;
 }
