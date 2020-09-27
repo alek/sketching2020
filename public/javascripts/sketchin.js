@@ -80,7 +80,8 @@ $("#run-button").click(function() {
 					decay: 0.6,
 					sustain: 0.2
 				}
-			}).connect(feedbackDelay)			
+			}).connect(feedbackDelay),
+			new Tone.Synth().toDestination()
 		]
 
 		requirejs(["mqtt"], function(mqtt) {
@@ -107,15 +108,21 @@ $("#run-button").click(function() {
 			  	$("#messages").empty()
 			  	$("#graph").empty()
 			  	drawRectangle([0,0], 500, 500, "#000", "graph")	
-			  	// drawRectangle([0,0], 500, 500, randomColor(), "graph")	
 			  }
 			  let freq = getFrequency(message)
 			  let color = randomColor()
+
+			  let synthID = urlParams.get("synthID")
+			  if (!synthID || synthID.trim().length == 0) {
+			  	synthID = 0
+			  } else {
+			  	synthID = parseInt(synthID)
+			  }
+
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + freq + "Hz" + '</div>')
 			  drawCircle([Math.random()*500,Math.random()*500], freq/4, color, "graph")		
 			  try {
-			  	// synths[Math.floor(Math.random()*synths.length)].triggerAttackRelease(freq, "8n");
-			  	synths[0].triggerAttackRelease(freq, "8n");
+			  	synths[synthID].triggerAttackRelease(freq, "8n");
 			  } catch (err) { }
 			});
 
