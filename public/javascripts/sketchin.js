@@ -55,7 +55,7 @@ $("#run-button").click(function() {
 			  	$("#messages").empty()
 			  }
 			  let freq = getFrequency(message)
-			  let color = "rgba(" + freq + ",0,0," + freq/600 + ")"
+			  let color = "rgba(" + freq + ",255,255," + freq/600 + ")"
 			  if (Math.random() < 0.1) {
 			  	color = "#000"
 			  }
