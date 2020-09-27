@@ -22,7 +22,7 @@ var getFrequency = function(message) {
 $("#run-button").click(function() {
 
 	$("#incoming-label").show()
-	drawRectangle([0,0], 800, 500, "#fff", "graph")		
+	drawRectangle([0,0], 500, 500, "#000", "graph")		
 
 	requirejs(["Tone"], function(Tone) {
 

@@ -57,7 +57,6 @@ body {
 	display: flex;
 	justify-content: center;
 	margin: 100px;
-	width: 40vw;
 }
 
 #run-button {
