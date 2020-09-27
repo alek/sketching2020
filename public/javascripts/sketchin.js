@@ -57,7 +57,7 @@ $("#run-button").click(function() {
 			});
 
 			client.on('message', function(topic, message) {
-			  if (Math.random() < 0.05) {
+			  if (Math.random() < 0.1) {
 			  	$("#messages").empty()
 			  	$("#graph").empty()
 			  	drawRectangle([0,0], 500, 500, randomColor(), "graph")	
