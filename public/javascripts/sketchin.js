@@ -1,3 +1,5 @@
+var messageCount = 0
+
 function isNumeric(value) {
         return /^-?\d+$/.test(value);
 }
@@ -30,6 +32,15 @@ $("#run-button").click(function() {
 	$("#incoming-label").show()
 	drawRectangle([0,0], 500, 500, "#000", "graph")		
 
+	setInterval(function() {
+		let circles = $("circle")
+		// $("rect")[0].attr("opacity", Math.max(0, $("rect")[0].attr("opacity") - 0.01 ))
+		for (let i=0; i<circles.length; i++) {
+			$(circles[i]).attr("r", Math.max(0, $(circles[i]).attr("r") - 0.1 ))
+			$(circles[i]).attr("opacity", Math.max(0, $(circles[i]).attr("opacity") - 0.01 ))
+		}
+	}, 25);
+
 	requirejs(["Tone"], function(Tone) {
 
 		const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5).toDestination();
@@ -39,10 +50,11 @@ $("#run-button").click(function() {
 				type: "sine"
 			},
 			envelope: {
-				attack: 0.5
+				attack: 0.7,
+				decay: 0.6,
+				sustain: 0.2
 			}
 		}).connect(feedbackDelay);
-
 
 		requirejs(["mqtt"], function(mqtt) {
 			var client = mqtt.connect('mqtt://try:try@broker.shiftr.io', {
@@ -56,10 +68,12 @@ $("#run-button").click(function() {
 			});
 
 			client.on('message', function(topic, message) {
-			  if (Math.random() < 0.1) {
+
+			  if (++messageCount%20 == 0) {
 			  	$("#messages").empty()
 			  	$("#graph").empty()
-			  	drawRectangle([0,0], 500, 500, randomColor(), "graph")	
+			  	drawRectangle([0,0], 500, 500, "#000", "graph")	
+			  	// drawRectangle([0,0], 500, 500, randomColor(), "graph")	
 			  }
 			  let freq = getFrequency(message)
 			  let color = randomColor()

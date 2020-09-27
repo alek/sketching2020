@@ -90,6 +90,7 @@ drawCircle = function(coord, r, fill, domID, id) {
 			r: r,
 			stroke: "#fff",
 			fill: fill,
+			opacity: 1.0,
 			"transform": "rotate(0 0 0)",
 			style: "stroke-width:0",
 			id: (id == null) ? randomID(): id
