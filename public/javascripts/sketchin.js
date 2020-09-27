@@ -34,10 +34,13 @@ $("#run-button").click(function() {
 
 	setInterval(function() {
 		let circles = $("circle")
-		// $("rect")[0].attr("opacity", Math.max(0, $("rect")[0].attr("opacity") - 0.01 ))
 		for (let i=0; i<circles.length; i++) {
 			$(circles[i]).attr("r", Math.max(0, $(circles[i]).attr("r") - 0.1 ))
 			$(circles[i]).attr("opacity", Math.max(0, $(circles[i]).attr("opacity") - 0.01 ))
+		}
+		let labels = $("text")
+		for (let i=0; i<labels.length; i++) {
+			$(labels[i]).attr("opacity", Math.max(0, $(labels[i]).attr("opacity") - 0.005 ))
 		}
 	}, 25);
 
@@ -64,6 +67,7 @@ $("#run-button").click(function() {
 			client.on('connect', function(){
 			  console.log('client has connected!');
 
+			  // client.subscribe('/try/table_7/#');
 			  client.subscribe('/try/table_7/#');
 			});
 

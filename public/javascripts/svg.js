@@ -222,8 +222,9 @@ drawText = function(coord, content, size, fill,weight, spacing, fontFamily, domI
 		x: coord[0],
 		y: coord[1],
 		"fill": fill,
+		"opacity": 1.0,
 		"transform": "rotate(0 50 100)",
-		"style": "font-size:" + size + ";text-align:center;alignment-baseline:" + align + ";text-anchor:" + align + ";opacity:1.0;font-family:" + fontFamily + ";sans-serif;font-weight:" + weight + ";letter-spacing:" + spacing + "px;"
+		"style": "font-size:" + size + ";text-align:center;alignment-baseline:" + align + ";text-anchor:" + align + ";font-family:" + fontFamily + ";sans-serif;font-weight:" + weight + ";letter-spacing:" + spacing + "px;"
 	}, content.toString(), domID); 
 }
 
