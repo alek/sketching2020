@@ -65,7 +65,7 @@ $("#run-button").click(function() {
 			  let freq = getFrequency(message)
 			  let color = randomColor()
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + getFrequency(message) + "Hz" + '</div>')
-			  drawCircle([Math.random()*500,Math.random()*500], freq/7, color, "graph")		
+			  drawCircle([Math.random()*500,Math.random()*500], freq/5, color, "graph")		
 			  try {
 			  	synth.triggerAttackRelease(freq, "4n");
 			  } catch (err) { }
