@@ -16,6 +16,7 @@ var getFrequency = function(message) {
 		return Math.min(20 + 5*parseInt(message),655)
 	} else {
 		// 
+		console.log("RENDER MESSAGE: " + message.toString())
 		drawText([250,100+75*Math.random()], message.toString(), 24 + Math.floor(48*Math.random()) + "px", "#fff", 500, 0, "Helvetica", "graph")
 		return 20 + sumLetters(message)%635
 	}
@@ -64,7 +65,7 @@ $("#run-button").click(function() {
 			  }
 			  let freq = getFrequency(message)
 			  let color = randomColor()
-			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + getFrequency(message) + "Hz" + '</div>')
+			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + freq + "Hz" + '</div>')
 			  drawCircle([Math.random()*500,Math.random()*500], freq/5, color, "graph")		
 			  try {
 			  	synth.triggerAttackRelease(freq, "4n");
