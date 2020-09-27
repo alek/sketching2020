@@ -134,7 +134,15 @@ $("#run-button").click(function() {
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + freq + "Hz" + '</div>')
 			  drawCircle([Math.random()*500,Math.random()*500], freq/4, color, "graph")		
 			  try {
-			  	synths[synthID].triggerAttackRelease(freq, "8n");
+			  	let synthControl = urlParams.get("synth")
+			  	if (!synthControl || synthControl.trim().length == 0) {	
+			  		synths[synthID].triggerAttackRelease(freq, "8n");	
+			  	} else if (synthControl == "random") {
+				  	synths[Math.floor(Math.random()*synths.length)].triggerAttackRelease(freq, "8n");
+				} else if (synthControl == "off") {
+					// no synths triggered
+				}
+
 			  } catch (err) { }
 			});
 
