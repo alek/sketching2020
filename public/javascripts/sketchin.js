@@ -49,16 +49,39 @@ $("#run-button").click(function() {
 
 		const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5).toDestination();
 
-		const synth = new Tone.MonoSynth({
-			oscillator: {
-				type: "sine"
-			},
-			envelope: {
-				attack: 0.7,
-				decay: 0.6,
-				sustain: 0.2
-			}
-		}).connect(feedbackDelay);
+		// const synth = new Tone.MonoSynth({
+		// 	oscillator: {
+		// 		type: "sine"
+		// 	},
+		// 	envelope: {
+		// 		attack: 0.7,
+		// 		decay: 0.6,
+		// 		sustain: 0.2
+		// 	}
+		// }).connect(feedbackDelay);
+
+		const synths = [
+			new Tone.MonoSynth({
+				oscillator: {
+					type: "sine"
+				},
+				envelope: {
+					attack: 0.7,
+					decay: 0.6,
+					sustain: 0.2
+				}
+			}).connect(feedbackDelay),
+			new Tone.MonoSynth({
+				oscillator: {
+					type: "sine"
+				},
+				envelope: {
+					attack: 0.1,
+					decay: 0.6,
+					sustain: 0.2
+				}
+			}).connect(feedbackDelay)			
+		]
 
 		requirejs(["mqtt"], function(mqtt) {
 			var client = mqtt.connect('mqtt://try:try@broker.shiftr.io', {
@@ -91,7 +114,8 @@ $("#run-button").click(function() {
 			  $("#messages").append('<div class="msg">' + topic.split("/").slice(-1)[0] + " " + message.toString() + " = " + freq + "Hz" + '</div>')
 			  drawCircle([Math.random()*500,Math.random()*500], freq/4, color, "graph")		
 			  try {
-			  	synth.triggerAttackRelease(freq, "8n");
+			  	// synths[Math.floor(Math.random()*synths.length)].triggerAttackRelease(freq, "8n");
+			  	synths[0].triggerAttackRelease(freq, "8n");
 			  } catch (err) { }
 			});
 
