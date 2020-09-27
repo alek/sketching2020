@@ -49,17 +49,6 @@ $("#run-button").click(function() {
 
 		const feedbackDelay = new Tone.FeedbackDelay("8n", 0.5).toDestination();
 
-		// const synth = new Tone.MonoSynth({
-		// 	oscillator: {
-		// 		type: "sine"
-		// 	},
-		// 	envelope: {
-		// 		attack: 0.7,
-		// 		decay: 0.6,
-		// 		sustain: 0.2
-		// 	}
-		// }).connect(feedbackDelay);
-
 		const synths = [
 			new Tone.MonoSynth({
 				oscillator: {
